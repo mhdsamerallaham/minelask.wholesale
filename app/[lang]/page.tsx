@@ -1,26 +1,13 @@
-"use client";
-
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { getTranslation } from "@/lib/i18n";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Star, Camera, Video, ShoppingBag, Scissors, Package, Smartphone } from "lucide-react";
-import { useEffect, useRef } from "react";
+import { ArrowRight, Star, Camera, Video, Scissors, PackageCheck, Smartphone } from "lucide-react";
 
-export default function LandingPage({ params }: { params: { lang: string } }) {
-    const { lang } = params;
+export default async function LandingPage({ params }: { params: Promise<{ lang: string }> }) {
+    const { lang } = await params;
     const t = (key: string) => getTranslation(lang, key);
-    const videoRef = useRef<HTMLVideoElement>(null);
-
-    useEffect(() => {
-        const video = videoRef.current;
-        if (video) {
-            video.addEventListener('loadstart', () => console.log('Video loading started'));
-            video.addEventListener('canplay', () => console.log('Video can play'));
-            video.addEventListener('error', (e) => console.log('Video error:', e));
-        }
-    }, []);
 
     const featuredProducts = [
         { id: 1, img: "/images/KBRA3911.jpg", title: "Evening Wear" },
@@ -36,19 +23,17 @@ export default function LandingPage({ params }: { params: { lang: string } }) {
             <main>
                 {/* Hero Section */}
                 <section className="relative h-screen flex items-center overflow-hidden">
-                    {/* Hero Video Background */}
+                    {/* Static Hero Image */}
                     <div className="absolute inset-0 z-0">
-                        <video
-                            ref={videoRef}
-                            autoPlay
-                            muted
-                            loop
-                            playsInline
-                            className="absolute inset-0 w-full h-full object-cover"
-                            poster="/images/hero.png"
-                        >
-                            <source src="/hero.mp4" type="video/mp4" />
-                        </video>
+                        <Image
+                            src="/images/hero.png"
+                            alt="Minel Ask Wholesale Model"
+                            fill
+                            className="object-cover"
+                            priority
+                            sizes="100vw"
+                            quality={85}
+                        />
                         {/* Overlay for text readability */}
                         <div className="absolute inset-0 bg-black/40" />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20" />
@@ -167,7 +152,7 @@ export default function LandingPage({ params }: { params: { lang: string } }) {
 
                             <div className="group p-8 bg-white border border-neutral-100 hover:border-neutral-300 hover:shadow-xl transition-all duration-300">
                                 <div className="w-16 h-16 bg-black text-white flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
-                                    <Package className="w-8 h-8" />
+                                    <PackageCheck className="w-8 h-8" />
                                 </div>
                                 <h3 className="text-xl font-bold mb-4">{t("landing.service_2_title")}</h3>
                                 <p className="text-neutral-500 leading-relaxed">{t("landing.service_2_desc")}</p>
