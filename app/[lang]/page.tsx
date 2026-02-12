@@ -23,17 +23,31 @@ export default async function LandingPage({ params }: { params: Promise<{ lang: 
             <main>
                 {/* Hero Section */}
                 <section className="relative h-screen flex items-center overflow-hidden">
-                    {/* Static Hero Image */}
+                    {/* Hero Video Background */}
                     <div className="absolute inset-0 z-0">
-                        <Image
-                            src="/images/hero.png"
-                            alt="Minel Ask Wholesale Model"
-                            fill
-                            className="object-cover"
-                            priority
-                            sizes="100vw"
-                            quality={85}
-                        />
+                        <video
+                            autoPlay
+                            muted
+                            loop
+                            playsInline
+                            className="w-full h-full object-cover"
+                            poster="/images/hero.png"
+                        >
+                            <source src="/hero.mp4" type="video/mp4" />
+                            Your browser does not support the video tag.
+                        </video>
+                        {/* Fallback image for browsers that don't support video */}
+                        <div className="absolute inset-0 z-0">
+                            <Image
+                                src="/images/hero.png"
+                                alt="Minel Ask Wholesale Model"
+                                fill
+                                className="object-cover"
+                                priority
+                                sizes="100vw"
+                                quality={85}
+                            />
+                        </div>
                         {/* Overlay for text readability */}
                         <div className="absolute inset-0 bg-black/40" />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20" />
