@@ -18,8 +18,8 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
     const { lang } = await params;
     const t = (key: string) => getTranslation(lang, key);
 
-    const whatsappNumber = "009055497113224";
-    const whatsappLink = `https://wa.me/${whatsappNumber}`;
+    const whatsappNumber = "905497113224";
+    const whatsappLink = `https://wa.me/${whatsappNumber}?text=`;
     const locationLink = "https://maps.app.goo.gl/f61ewsdyjy4YpB9o9";
     const instagramLink = "https://www.instagram.com/minelaskofficial/";
     const youtubeLink = "https://www.youtube.com/@minelask4832";
