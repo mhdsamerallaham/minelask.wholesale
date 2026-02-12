@@ -195,7 +195,7 @@ export default async function LandingPage({ params }: { params: Promise<{ lang: 
                                         <Star className="w-5 h-5" />
                                     </div>
                                     <div>
-                                        <h4 className="text-xl font-bold mb-2">{t("landing.wholesale")}</h4>
+                                        <h3 className="text-xl font-bold mb-2">{t("landing.wholesale")}</h3>
                                         <p className="text-neutral-400 leading-relaxed">{t("landing.wholesale_desc")}</p>
                                     </div>
                                 </div>
@@ -205,7 +205,7 @@ export default async function LandingPage({ params }: { params: Promise<{ lang: 
                                         <Camera className="w-5 h-5" />
                                     </div>
                                     <div>
-                                        <h4 className="text-xl font-bold mb-2">{t("landing.photography")}</h4>
+                                        <h3 className="text-xl font-bold mb-2">{t("landing.photography")}</h3>
                                         <p className="text-neutral-400 leading-relaxed">{t("landing.photography_desc")}</p>
                                     </div>
                                 </div>
@@ -215,7 +215,7 @@ export default async function LandingPage({ params }: { params: Promise<{ lang: 
                                         <Video className="w-5 h-5" />
                                     </div>
                                     <div>
-                                        <h4 className="text-xl font-bold mb-2">{t("landing.video")}</h4>
+                                        <h3 className="text-xl font-bold mb-2">{t("landing.video")}</h3>
                                         <p className="text-neutral-400 leading-relaxed">{t("landing.video_desc")}</p>
                                     </div>
                                 </div>

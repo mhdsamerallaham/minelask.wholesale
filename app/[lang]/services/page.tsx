@@ -230,7 +230,7 @@ export default async function ServicesPage({ params }: { params: Promise<{ lang:
                                                     <div className="w-5 h-5 rounded-full border border-black flex items-center justify-center mt-0.5 group-hover:bg-black group-hover:text-white transition-colors">
                                                         <Check className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
                                                     </div>
-                                                    <h4 className="font-bold text-sm uppercase tracking-wide">{feature.title}</h4>
+                                                    <h3 className="font-bold text-sm uppercase tracking-wide">{feature.title}</h3>
                                                 </div>
                                                 <p className="text-sm text-neutral-500 leading-relaxed pl-8">
                                                     {feature.desc}
