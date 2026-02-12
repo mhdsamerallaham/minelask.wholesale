@@ -31,6 +31,8 @@ export default async function LandingPage({ params }: { params: Promise<{ lang: 
                             fill
                             className="object-cover"
                             priority
+                            sizes="100vw"
+                            quality={85}
                         />
                         {/* Overlay for text readability */}
                         <div className="absolute inset-0 bg-black/40" />
@@ -110,6 +112,9 @@ export default async function LandingPage({ params }: { params: Promise<{ lang: 
                                             alt={product.title}
                                             fill
                                             className="object-cover transition-transform duration-700 group-hover:scale-110"
+                                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                                            quality={75}
+                                            loading="lazy"
                                         />
                                         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
                                     </div>
@@ -173,6 +178,9 @@ export default async function LandingPage({ params }: { params: Promise<{ lang: 
                             alt="Photography Service"
                             fill
                             className="object-cover"
+                            sizes="50vw"
+                            quality={75}
+                            loading="lazy"
                         />
                     </div>
 
