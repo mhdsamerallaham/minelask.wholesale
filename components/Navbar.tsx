@@ -86,23 +86,23 @@ export default function Navbar({ lang }: { lang: string }) {
 
                         <div className="flex items-center space-x-2 md:space-x-4 rtl:space-x-reverse">
                             <div className="hidden md:flex items-center space-x-2 rtl:space-x-reverse">
-                                <a href="https://www.instagram.com/minelaskofficial/" target="_blank" rel="noopener noreferrer" className="p-2 text-neutral-600 hover:text-black transition-colors">
+                                <a href="https://www.instagram.com/minelaskofficial/" target="_blank" rel="noopener noreferrer" className="p-2 text-neutral-600 hover:text-black transition-colors" aria-label="Instagram">
                                     <Instagram className="w-5 h-5" />
                                 </a>
-                                <a href="https://www.youtube.com/@minelask4832" target="_blank" rel="noopener noreferrer" className="p-2 text-neutral-600 hover:text-black transition-colors">
+                                <a href="https://www.youtube.com/@minelask4832" target="_blank" rel="noopener noreferrer" className="p-2 text-neutral-600 hover:text-black transition-colors" aria-label="YouTube">
                                     <Youtube className="w-5 h-5" />
                                 </a>
                             </div>
 
-                            <Link href={toggleLang()} className="p-2 text-neutral-600 hover:text-black transition-colors flex items-center gap-1 md:gap-2">
+                            <Link href={toggleLang()} className="p-2 text-neutral-600 hover:text-black transition-colors flex items-center gap-1 md:gap-2" aria-label={`Switch to ${lang === "en" ? "Arabic" : "English"}`}>
                                 <Globe className="w-4 h-4 md:w-5 md:h-5" />
                                 <span className="text-xs md:text-sm font-semibold uppercase">{lang === "en" ? "AR" : "EN"}</span>
                             </Link>
 
-                            <Link href={`/${lang}/cart`} className="p-2 text-neutral-600 hover:text-black transition-colors relative">
+                            <Link href={`/${lang}/cart`} className="p-2 text-neutral-600 hover:text-black transition-colors relative" aria-label={`Shopping Cart${cartCount > 0 ? ` (${cartCount} items)` : ''}`}>
                                 <ShoppingCart className="w-4 h-4 md:w-5 md:h-5" />
                                 {cartCount > 0 && (
-                                    <span className="absolute -top-1 -right-1 bg-black text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">{cartCount}</span>
+                                    <span className="absolute -top-1 -right-1 bg-black text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold" aria-hidden="true">{cartCount}</span>
                                 )}
                             </Link>
 

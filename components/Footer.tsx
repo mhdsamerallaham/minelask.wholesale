@@ -19,10 +19,10 @@ export default function Footer({ lang }: { lang: string }) {
                             {t("landing.hero_desc")}
                         </p>
                         <div className="flex space-x-4 rtl:space-x-reverse">
-                            <a href="https://www.instagram.com/minelaskofficial/" target="_blank" rel="noopener noreferrer" className="p-3 bg-neutral-900 hover:bg-white hover:text-black transition-all duration-300 border border-neutral-800">
+                            <a href="https://www.instagram.com/minelaskofficial/" target="_blank" rel="noopener noreferrer" className="p-3 bg-neutral-900 hover:bg-white hover:text-black transition-all duration-300 border border-neutral-800" aria-label="Instagram">
                                 <Instagram className="w-5 h-5" />
                             </a>
-                            <a href="https://www.youtube.com/@minelask4832" target="_blank" rel="noopener noreferrer" className="p-3 bg-neutral-900 hover:bg-white hover:text-black transition-all duration-300 border border-neutral-800">
+                            <a href="https://www.youtube.com/@minelask4832" target="_blank" rel="noopener noreferrer" className="p-3 bg-neutral-900 hover:bg-white hover:text-black transition-all duration-300 border border-neutral-800" aria-label="YouTube">
                                 <Youtube className="w-5 h-5" />
                             </a>
                         </div>
