@@ -54,7 +54,10 @@ export default function ProductCard({ product, lang }: { product: Product; lang:
                         </p>
                     </div>
 
-                    <button className="bg-slate-900 text-white p-3 rounded-xl hover:bg-rose-700 hover:scale-105 active:scale-95 transition-all duration-200 shadow-lg shadow-slate-900/20 hover:shadow-rose-700/30">
+                    <button 
+                        className="bg-slate-900 text-white p-3 rounded-xl hover:bg-rose-700 hover:scale-105 active:scale-95 transition-all duration-200 shadow-lg shadow-slate-900/20 hover:shadow-rose-700/30"
+                        aria-label={t("product.add_to_cart")}
+                    >
                         <ShoppingCart className="w-5 h-5" />
                     </button>
                 </div>
