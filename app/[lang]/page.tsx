@@ -30,24 +30,13 @@ export default async function LandingPage({ params }: { params: Promise<{ lang: 
                             muted
                             loop
                             playsInline
-                            className="w-full h-full object-cover"
+                            className="w-full h-full object-cover absolute inset-0"
                             poster="/images/hero.png"
+                            style={{ zIndex: 1 }}
                         >
                             <source src="/hero.mp4" type="video/mp4" />
                             Your browser does not support the video tag.
                         </video>
-                        {/* Fallback image for browsers that don't support video */}
-                        <div className="absolute inset-0 z-0">
-                            <Image
-                                src="/images/hero.png"
-                                alt="Minel Ask Wholesale Model"
-                                fill
-                                className="object-cover"
-                                priority
-                                sizes="100vw"
-                                quality={85}
-                            />
-                        </div>
                         {/* Overlay for text readability */}
                         <div className="absolute inset-0 bg-black/40" />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20" />
