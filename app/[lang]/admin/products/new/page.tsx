@@ -208,8 +208,9 @@ export default function NewProductPage({ params }: { params: Promise<{ lang: str
                         <h3 className="text-lg font-bold">General Information</h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div className="space-y-2">
-                                <label className="text-xs font-bold uppercase tracking-widest text-slate-400">Product Name (EN)</label>
+                                <label htmlFor="name_en" className="text-xs font-bold uppercase tracking-widest text-slate-400">Product Name (EN)</label>
                                 <input
+                                    id="name_en"
                                     type="text"
                                     required
                                     value={form.name_en}
@@ -218,8 +219,9 @@ export default function NewProductPage({ params }: { params: Promise<{ lang: str
                                 />
                             </div>
                             <div className="space-y-2">
-                                <label className="text-xs font-bold uppercase tracking-widest text-slate-400">Product Name (AR)</label>
+                                <label htmlFor="name_ar" className="text-xs font-bold uppercase tracking-widest text-slate-400">Product Name (AR)</label>
                                 <input
+                                    id="name_ar"
                                     type="text"
                                     required
                                     value={form.name_ar}
@@ -229,16 +231,18 @@ export default function NewProductPage({ params }: { params: Promise<{ lang: str
                                 />
                             </div>
                             <div className="col-span-1 md:col-span-2 space-y-2">
-                                <label className="text-xs font-bold uppercase tracking-widest text-slate-400">Description (EN)</label>
+                                <label htmlFor="description_en" className="text-xs font-bold uppercase tracking-widest text-slate-400">Description (EN)</label>
                                 <textarea
+                                    id="description_en"
                                     value={form.description_en}
                                     onChange={(e) => setForm({ ...form, description_en: e.target.value })}
                                     className="w-full px-4 py-3 bg-slate-50 border-none rounded-2xl focus:ring-2 focus:ring-rose-500/20 outline-none transition-all min-h-[100px]"
                                 />
                             </div>
                             <div className="col-span-1 md:col-span-2 space-y-2">
-                                <label className="text-xs font-bold uppercase tracking-widest text-slate-400">Description (AR)</label>
+                                <label htmlFor="description_ar" className="text-xs font-bold uppercase tracking-widest text-slate-400">Description (AR)</label>
                                 <textarea
+                                    id="description_ar"
                                     value={form.description_ar}
                                     onChange={(e) => setForm({ ...form, description_ar: e.target.value })}
                                     className="w-full px-4 py-3 bg-slate-50 border-none rounded-2xl focus:ring-2 focus:ring-rose-500/20 outline-none transition-all text-right min-h-[100px]"
@@ -246,8 +250,9 @@ export default function NewProductPage({ params }: { params: Promise<{ lang: str
                                 />
                             </div>
                             <div className="space-y-2">
-                                <label className="text-xs font-bold uppercase tracking-widest text-slate-400">Category</label>
+                                <label htmlFor="category" className="text-xs font-bold uppercase tracking-widest text-slate-400">Category</label>
                                 <select
+                                    id="category"
                                     required
                                     value={form.category_slug}
                                     onChange={(e) => setForm({ ...form, category_slug: e.target.value })}
@@ -260,8 +265,9 @@ export default function NewProductPage({ params }: { params: Promise<{ lang: str
                                 </select>
                             </div>
                             <div className="space-y-2">
-                                <label className="text-xs font-bold uppercase tracking-widest text-slate-400">SKU</label>
+                                <label htmlFor="sku" className="text-xs font-bold uppercase tracking-widest text-slate-400">SKU</label>
                                 <input
+                                    id="sku"
                                     type="text"
                                     required
                                     value={form.sku}
@@ -293,8 +299,9 @@ export default function NewProductPage({ params }: { params: Promise<{ lang: str
                                         <div className="space-y-4">
                                             <div className="grid grid-cols-2 gap-4">
                                                 <div className="space-y-2">
-                                                    <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Color (EN)</label>
+                                                    <label htmlFor={`color_en_${i}`} className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Color (EN)</label>
                                                     <input
+                                                        id={`color_en_${i}`}
                                                         type="text"
                                                         placeholder="Red"
                                                         required
@@ -304,8 +311,9 @@ export default function NewProductPage({ params }: { params: Promise<{ lang: str
                                                     />
                                                 </div>
                                                 <div className="space-y-2 text-right">
-                                                    <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Color (AR)</label>
+                                                    <label htmlFor={`color_ar_${i}`} className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Color (AR)</label>
                                                     <input
+                                                        id={`color_ar_${i}`}
                                                         type="text"
                                                         placeholder="أحمر"
                                                         required
@@ -318,16 +326,18 @@ export default function NewProductPage({ params }: { params: Promise<{ lang: str
                                             </div>
 
                                             <div className="space-y-2">
-                                                <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Hex Code</label>
+                                                <label htmlFor={`hex_code_${i}`} className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Hex Code</label>
                                                 <div className="flex flex-col gap-3">
                                                     <div className="flex gap-2">
                                                         <input
+                                                            id={`hex_color_${i}`}
                                                             type="color"
                                                             value={v.color_hex}
                                                             onChange={(e) => updateVariant(i, "color_hex", e.target.value)}
                                                             className="w-10 h-10 border-none p-0 bg-transparent cursor-pointer rounded-lg"
                                                         />
                                                         <input
+                                                            id={`hex_code_${i}`}
                                                             type="text"
                                                             value={v.color_hex}
                                                             onChange={(e) => updateVariant(i, "color_hex", e.target.value)}
@@ -351,8 +361,9 @@ export default function NewProductPage({ params }: { params: Promise<{ lang: str
                                             </div>
 
                                             <div className="space-y-2">
-                                                <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Sizes</label>
+                                                <label htmlFor={`sizes_${i}`} className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Sizes</label>
                                                 <input
+                                                    id={`sizes_${i}`}
                                                     type="text"
                                                     placeholder="S, M, L, XL"
                                                     value={v.sizes.join(", ")}
@@ -364,7 +375,7 @@ export default function NewProductPage({ params }: { params: Promise<{ lang: str
 
                                         {/* Variant Image */}
                                         <div className="space-y-2">
-                                            <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Color Photo</label>
+                                            <label htmlFor={`variant_file_${i}`} className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Color Photo</label>
                                             <div
                                                 onClick={() => document.getElementById(`variant-file-${i}`)?.click()}
                                                 className="aspect-square bg-white border-2 border-dashed border-slate-200 rounded-2xl flex flex-col items-center justify-center cursor-pointer hover:bg-slate-100 transition-all overflow-hidden relative"
@@ -383,9 +394,11 @@ export default function NewProductPage({ params }: { params: Promise<{ lang: str
                                                     accept="image/*"
                                                     className="hidden"
                                                     onChange={(e) => handleVariantFileChange(i, e)}
+                                                    aria-label={`Upload variant ${i + 1} color image`}
                                                 />
                                             </div>
                                             <input
+                                                id={`variant_image_url_${i}`}
                                                 type="url"
                                                 placeholder="Or paste Image URL"
                                                 value={v.image_url && !v.image_url.startsWith('data:') ? v.image_url : ''}
@@ -439,11 +452,13 @@ export default function NewProductPage({ params }: { params: Promise<{ lang: str
                                 onChange={handleMainFileChange}
                                 accept="image/*"
                                 className="hidden"
+                                aria-label="Upload main product image"
                             />
 
                             <div className="space-y-2">
-                                <label className="text-xs font-bold uppercase tracking-widest text-slate-400">Or Image URL</label>
+                                <label htmlFor="primary_image_url" className="text-xs font-bold uppercase tracking-widest text-slate-400">Or Image URL</label>
                                 <input
+                                    id="primary_image_url"
                                     type="url"
                                     value={form.primary_image_url}
                                     onChange={(e) => {
@@ -462,8 +477,9 @@ export default function NewProductPage({ params }: { params: Promise<{ lang: str
                         <h3 className="text-lg font-bold">Logistics</h3>
                         <div className="space-y-6">
                             <div className="space-y-2">
-                                <label className="text-xs font-bold uppercase tracking-widest text-slate-400">Wholesale Price (USD)</label>
+                                <label htmlFor="wholesale_price" className="text-xs font-bold uppercase tracking-widest text-slate-400">Wholesale Price (USD)</label>
                                 <input
+                                    id="wholesale_price"
                                     type="number"
                                     step="0.01"
                                     required
@@ -473,8 +489,9 @@ export default function NewProductPage({ params }: { params: Promise<{ lang: str
                                 />
                             </div>
                             <div className="space-y-2">
-                                <label className="text-xs font-bold uppercase tracking-widest text-slate-400">Min. Order Qty</label>
+                                <label htmlFor="min_order_qty" className="text-xs font-bold uppercase tracking-widest text-slate-400">Min. Order Qty</label>
                                 <input
+                                    id="min_order_qty"
                                     type="number"
                                     required
                                     value={form.min_order_qty}
