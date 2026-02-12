@@ -30,12 +30,13 @@ export default async function LandingPage({ params }: { params: Promise<{ lang: 
                             muted
                             loop
                             playsInline
-                            className="w-full h-full object-cover absolute inset-0"
+                            className="absolute inset-0 w-full h-full object-cover"
                             poster="/images/hero.png"
-                            style={{ zIndex: 1 }}
+                            onLoadStart={() => console.log('Video loading started')}
+                            onCanPlay={() => console.log('Video can play')}
+                            onError={(e) => console.log('Video error:', e)}
                         >
                             <source src="/hero.mp4" type="video/mp4" />
-                            Your browser does not support the video tag.
                         </video>
                         {/* Overlay for text readability */}
                         <div className="absolute inset-0 bg-black/40" />
