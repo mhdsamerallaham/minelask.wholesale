@@ -102,7 +102,7 @@ export default function Navbar({ lang }: { lang: string }) {
                             <Link href={`/${lang}/cart`} className="p-2 text-neutral-600 hover:text-black transition-colors relative" aria-label={`Shopping Cart${cartCount > 0 ? ` (${cartCount} items)` : ''}`}>
                                 <ShoppingCart className="w-4 h-4 md:w-5 md:h-5" />
                                 {cartCount > 0 && (
-                                    <span className="absolute -top-1 -right-1 bg-black text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold" aria-hidden="true">{cartCount}</span>
+                                    <span className="absolute -top-1 -right-1 bg-black text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold pointer-events-none" aria-hidden="true">{cartCount}</span>
                                 )}
                             </Link>
 
