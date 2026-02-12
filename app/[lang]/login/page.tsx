@@ -39,7 +39,7 @@ export default function LoginPage() {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-slate-50 p-4">
+        <main className="min-h-screen flex items-center justify-center bg-slate-50 p-4">
             <div className="w-full max-w-md">
                 <div className="bg-white rounded-3xl shadow-xl p-8 md:p-12 space-y-8">
                     {/* Header */}
@@ -111,6 +111,6 @@ export default function LoginPage() {
                     </div>
                 </div>
             </div>
-        </div>
+        </main>
     );
 }
