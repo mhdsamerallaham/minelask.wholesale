@@ -98,7 +98,7 @@ export default async function LandingPage({ params }: { params: Promise<{ lang: 
                                 <h2 className="text-4xl font-bold font-heading mb-4">{t("landing.latest_collections")}</h2>
                                 <p className="text-neutral-500 max-w-md">{t("landing.collections_desc")}</p>
                             </div>
-                            <Link href={`/${lang}/shop`} className="hidden md:flex items-center gap-2 text-black font-bold hover:underline underline-offset-4">
+                            <Link href={`/${lang}/shop`} className="hidden md:flex items-center gap-2 text-black font-bold hover:text-neutral-700 hover:underline underline-offset-4 transition-colors">
                                 {t("landing.view_all")} <ArrowRight className="w-4 h-4 rtl:rotate-180" />
                             </Link>
                         </div>
@@ -119,12 +119,12 @@ export default async function LandingPage({ params }: { params: Promise<{ lang: 
                                         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
                                     </div>
                                     <h3 className="text-lg font-bold group-hover:text-neutral-600 transition-colors">{product.title}</h3>
-                                    <span className="text-sm text-neutral-400 uppercase tracking-wider">{t("landing.wholesale_only")}</span>
+                                    <span className="text-sm text-neutral-600 uppercase tracking-wider">{t("landing.wholesale_only")}</span>
                                 </Link>
                             ))}
                         </div>
                         <div className="mt-12 text-center md:hidden">
-                            <Link href={`/${lang}/shop`} className="inline-block border border-black px-8 py-3 font-bold uppercase tracking-wider transition-colors hover:bg-black hover:text-white">
+                            <Link href={`/${lang}/shop`} className="inline-block border border-black text-black px-8 py-3 font-bold uppercase tracking-wider transition-colors hover:bg-black hover:text-white">
                                 {t("landing.view_all_collections")}
                             </Link>
                         </div>

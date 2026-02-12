@@ -61,13 +61,13 @@ export default function Footer({ lang }: { lang: string }) {
                     </div>
                 </div>
 
-                <div className="mt-12 md:mt-16 pt-6 md:pt-8 border-t border-neutral-900 flex flex-col sm:flex-row items-center justify-between gap-4 text-neutral-500 text-xs md:text-sm">
+                <div className="mt-12 md:mt-16 pt-6 md:pt-8 border-t border-neutral-900 flex flex-col sm:flex-row items-center justify-between gap-4 text-neutral-300 text-xs md:text-sm">
                     <div>© {new Date().getFullYear()} Minel Aşk. {t("footer.copyright")}</div>
                     <a 
                         href="https://www.samer.life/" 
                         target="_blank" 
                         rel="noopener noreferrer"
-                        className="text-neutral-400 hover:text-white transition-colors"
+                        className="text-neutral-300 hover:text-white transition-colors"
                     >
                         Made by Samer
                     </a>
