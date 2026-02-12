@@ -1,13 +1,26 @@
+"use client";
+
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { getTranslation } from "@/lib/i18n";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Star, Camera, Video, Scissors, PackageCheck, Smartphone } from "lucide-react";
+import { ArrowRight, Star, Camera, Video, ShoppingBag, Scissors, Package, Smartphone } from "lucide-react";
+import { useEffect, useRef } from "react";
 
-export default async function LandingPage({ params }: { params: Promise<{ lang: string }> }) {
-    const { lang } = await params;
+export default function LandingPage({ params }: { params: { lang: string } }) {
+    const { lang } = params;
     const t = (key: string) => getTranslation(lang, key);
+    const videoRef = useRef<HTMLVideoElement>(null);
+
+    useEffect(() => {
+        const video = videoRef.current;
+        if (video) {
+            video.addEventListener('loadstart', () => console.log('Video loading started'));
+            video.addEventListener('canplay', () => console.log('Video can play'));
+            video.addEventListener('error', (e) => console.log('Video error:', e));
+        }
+    }, []);
 
     const featuredProducts = [
         { id: 1, img: "/images/KBRA3911.jpg", title: "Evening Wear" },
@@ -26,15 +39,13 @@ export default async function LandingPage({ params }: { params: Promise<{ lang: 
                     {/* Hero Video Background */}
                     <div className="absolute inset-0 z-0">
                         <video
+                            ref={videoRef}
                             autoPlay
                             muted
                             loop
                             playsInline
                             className="absolute inset-0 w-full h-full object-cover"
                             poster="/images/hero.png"
-                            onLoadStart={() => console.log('Video loading started')}
-                            onCanPlay={() => console.log('Video can play')}
-                            onError={(e) => console.log('Video error:', e)}
                         >
                             <source src="/hero.mp4" type="video/mp4" />
                         </video>
@@ -156,7 +167,7 @@ export default async function LandingPage({ params }: { params: Promise<{ lang: 
 
                             <div className="group p-8 bg-white border border-neutral-100 hover:border-neutral-300 hover:shadow-xl transition-all duration-300">
                                 <div className="w-16 h-16 bg-black text-white flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
-                                    <PackageCheck className="w-8 h-8" />
+                                    <Package className="w-8 h-8" />
                                 </div>
                                 <h3 className="text-xl font-bold mb-4">{t("landing.service_2_title")}</h3>
                                 <p className="text-neutral-500 leading-relaxed">{t("landing.service_2_desc")}</p>
