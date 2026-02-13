@@ -20,6 +20,9 @@ export async function POST(request: NextRequest) {
         const rows: any[] = XLSX.utils.sheet_to_json(sheet);
 
         const supabase = supabaseAdmin();
+        if (!supabase) {
+            return NextResponse.json({ success: false, error: "Database not configured" }, { status: 500 });
+        }
         let successCount = 0;
         const errors: any[] = [];
 

@@ -22,7 +22,7 @@ export default function AdminSettingsPage() {
             const { data } = await supabase.from("admin_settings").select("setting_key, setting_value");
             if (data) {
                 const sObj: any = {};
-                data.forEach(s => sObj[s.setting_key] = s.setting_value);
+                data.forEach((s: any) => sObj[s.setting_key] = s.setting_value);
                 setSettings(prev => ({ ...prev, ...sObj }));
             }
         }

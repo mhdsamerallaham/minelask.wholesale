@@ -11,7 +11,7 @@ export default function AdminDashboard() {
     const lang = params.lang as string;
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [isChecking, setIsChecking] = useState(true);
-    
+
     const [stats, setStats] = useState({
         totalOrders: 0,
         totalProducts: 0,
@@ -37,14 +37,14 @@ export default function AdminDashboard() {
 
     useEffect(() => {
         if (!isAuthenticated) return;
-        
+
         async function fetchStats() {
             const { count: orderCount } = await supabase.from("orders").select("*", { count: 'exact', head: true });
             const { count: prodCount } = await supabase.from("products").select("*", { count: 'exact', head: true });
             const { count: pendingCount } = await supabase.from("orders").select("*", { count: 'exact', head: true }).eq("status", "pending");
 
             const { data: salesData } = await supabase.from("orders").select("total_price");
-            const totalSales = salesData?.reduce((sum, order) => sum + (order.total_price || 0), 0) || 0;
+            const totalSales = salesData?.reduce((sum: number, order: any) => sum + (order.total_price || 0), 0) || 0;
 
             setStats({
                 totalOrders: orderCount || 0,

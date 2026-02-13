@@ -20,8 +20,17 @@ const notoArabic = Noto_Sans_Arabic({
 });
 
 export const metadata: Metadata = {
+    metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://minelask-wholesale.vercel.app'),
     title: "Minel Aşk | Wholesale Fashion",
     description: "Premium wholesale dresses, photography, and digital services for global partners.",
+    icons: {
+        icon: '/icon.jpeg',
+        shortcut: '/icon.jpeg',
+        apple: '/icon.jpeg',
+    },
+    openGraph: {
+        images: ['/icon.jpeg'],
+    },
 };
 
 export default async function RootLayout({
