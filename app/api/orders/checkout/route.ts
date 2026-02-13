@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { supabaseAdmin } from "@/lib/supabase/client";
+import { supabaseAdmin, supabase as supabaseAnon } from "@/lib/supabase/client";
 import twilio from "twilio";
 
 export const dynamic = 'force-dynamic';
@@ -13,11 +13,19 @@ export async function POST(request: NextRequest) {
         // Helper to format message
         const message = formatWhatsAppMessage(orderNumber, customer, items);
 
-        // Try to get Supabase client
-        const supabase = supabaseAdmin();
+        // Try to get Supabase client (Service Key preferred, fallback to Anon)
+        let supabase = supabaseAdmin();
 
-        // If Supabase is not configured, bypass DB and return success immediately
         if (!supabase) {
+            console.warn("Service Key missing, attempting fallback to Anon Key.");
+            // Check if supabaseAnon is a real client (has 'from' method)
+            if (supabaseAnon && typeof (supabaseAnon as any).from === 'function') {
+                supabase = supabaseAnon;
+            }
+        }
+
+        // If Supabase is still not configured or invalid, bypass DB
+        if (!supabase || typeof (supabase as any).from !== 'function') {
             console.warn("Supabase not configured, skipping DB order creation.");
             return NextResponse.json({
                 success: true,
@@ -29,6 +37,7 @@ export async function POST(request: NextRequest) {
         }
 
         // 1. Validate MOQ server-side (Stock check disabled as per user request for production items)
+
         const productIds = items.map((i: any) => i.id);
         const { data: dbProducts, error: fetchError } = await supabase
             .from("products")
