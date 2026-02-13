@@ -49,16 +49,16 @@ export default function AdminSettingsPage() {
     };
 
     return (
-        <div className="max-w-4xl space-y-12">
+        <div className="max-w-4xl space-y-8 sm:space-y-12">
             <div>
-                <h1 className="text-4xl font-bold font-heading text-slate-900 leading-tight">Settings</h1>
-                <p className="text-slate-500 font-medium">Configure your platform, contact details, and business rules.</p>
+                <h1 className="text-2xl sm:text-4xl font-bold font-heading text-slate-900 leading-tight">Settings</h1>
+                <p className="text-slate-500 font-medium text-sm sm:text-base">Configure your platform, contact details, and business rules.</p>
             </div>
 
-            <form onSubmit={handleSave} className="space-y-8">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <form onSubmit={handleSave} className="space-y-6 sm:space-y-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8">
                     {/* Contact Settings */}
-                    <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm space-y-6">
+                    <div className="bg-white p-5 sm:p-8 rounded-2xl sm:rounded-3xl border border-slate-100 shadow-sm space-y-5 sm:space-y-6">
                         <h3 className="text-lg font-bold flex items-center gap-2">
                             <Smartphone className="w-5 h-5 text-rose-700" />
                             Contact Information
@@ -87,7 +87,7 @@ export default function AdminSettingsPage() {
                     </div>
 
                     {/* Social Media */}
-                    <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm space-y-6">
+                    <div className="bg-white p-5 sm:p-8 rounded-2xl sm:rounded-3xl border border-slate-100 shadow-sm space-y-5 sm:space-y-6">
                         <h3 className="text-lg font-bold flex items-center gap-2">
                             <Instagram className="w-5 h-5 text-rose-700" />
                             Social Presence
@@ -117,12 +117,12 @@ export default function AdminSettingsPage() {
                     </div>
 
                     {/* Business Rules */}
-                    <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm space-y-6 md:col-span-2">
+                    <div className="bg-white p-5 sm:p-8 rounded-2xl sm:rounded-3xl border border-slate-100 shadow-sm space-y-5 sm:space-y-6 md:col-span-2">
                         <h3 className="text-lg font-bold flex items-center gap-2">
                             <DollarSign className="w-5 h-5 text-rose-700" />
                             Business & Shipping Rules
                         </h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                             <div className="space-y-2">
                                 <label className="text-xs font-bold uppercase tracking-widest text-slate-400">Min. Order Value (USD)</label>
                                 <input
@@ -149,7 +149,7 @@ export default function AdminSettingsPage() {
                     <button
                         type="submit"
                         disabled={loading}
-                        className="bg-slate-900 text-white px-10 py-4 rounded-2xl font-bold flex items-center gap-3 hover:bg-slate-800 transition-all shadow-xl shadow-slate-900/10"
+                        className="w-full sm:w-auto bg-slate-900 text-white px-8 sm:px-10 py-3.5 sm:py-4 rounded-2xl font-bold flex items-center justify-center gap-3 hover:bg-slate-800 transition-all shadow-xl shadow-slate-900/10 text-sm sm:text-base"
                     >
                         {loading ? "Saving..." : <Save className="w-5 h-5" />}
                         Save All Settings

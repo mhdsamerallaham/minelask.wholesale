@@ -53,27 +53,27 @@ export default function AdminProductsPage({ params }: { params: Promise<{ lang: 
     };
 
     return (
-        <div className="space-y-12">
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
+        <div className="space-y-8 sm:space-y-12">
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 sm:gap-8">
                 <div>
-                    <h1 className="text-4xl font-bold font-heading text-slate-900 leading-tight">Products</h1>
-                    <p className="text-slate-500 font-medium">Manage your wholesale collection and stock levels.</p>
+                    <h1 className="text-2xl sm:text-4xl font-bold font-heading text-slate-900 leading-tight">Products</h1>
+                    <p className="text-slate-500 font-medium text-sm sm:text-base">Manage your wholesale collection and stock levels.</p>
                 </div>
 
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-3 sm:gap-4">
                     <Link
                         href={`/${lang}/admin/products/bulk-upload`}
-                        className="bg-white border border-slate-200 text-slate-700 px-6 py-3 rounded-2xl font-bold flex items-center gap-2 hover:bg-slate-50 transition-all shadow-sm"
+                        className="bg-white border border-slate-200 text-slate-700 px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl font-bold flex items-center gap-2 hover:bg-slate-50 transition-all shadow-sm text-xs sm:text-sm"
                     >
-                        <Upload className="w-5 h-5" />
-                        Bulk Upload
+                        <Upload className="w-4 h-4 sm:w-5 sm:h-5" />
+                        <span className="hidden sm:inline">Bulk </span>Upload
                     </Link>
                     <Link
                         href={`/${lang}/admin/products/new`}
-                        className="bg-rose-700 text-white px-6 py-3 rounded-2xl font-bold flex items-center gap-2 hover:bg-rose-800 transition-all shadow-lg shadow-rose-900/20 shadow-sm"
+                        className="bg-rose-700 text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl font-bold flex items-center gap-2 hover:bg-rose-800 transition-all shadow-lg shadow-rose-900/20 text-xs sm:text-sm"
                     >
-                        <Plus className="w-5 h-5" />
-                        Add Product
+                        <Plus className="w-4 h-4 sm:w-5 sm:h-5" />
+                        <span className="hidden sm:inline">Add </span>Product
                     </Link>
                 </div>
             </div>
@@ -132,16 +132,16 @@ export default function AdminProductsPage({ params }: { params: Promise<{ lang: 
                                                 {product.stock_qty || 0} in stock
                                             </span>
                                         </td>
-                                        <td className="px-8 py-4 text-right">
-                                            <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <td className="px-4 sm:px-8 py-4 text-right">
+                                            <div className="flex items-center justify-end gap-2 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
                                                 <Link href={`/${lang}/product/${product.id}`} className="p-2 text-slate-400 hover:text-blue-600 transition-colors">
-                                                    <Eye className="w-5 h-5" />
+                                                    <Eye className="w-4 h-4 sm:w-5 sm:h-5" />
                                                 </Link>
                                                 <Link href={`/${lang}/admin/products/${product.id}/edit`} className="p-2 text-slate-400 hover:text-amber-600 transition-colors">
-                                                    <Edit2 className="w-5 h-5" />
+                                                    <Edit2 className="w-4 h-4 sm:w-5 sm:h-5" />
                                                 </Link>
                                                 <button onClick={() => handleDelete(product)} className="p-2 text-slate-400 hover:text-rose-600 transition-colors">
-                                                    <Trash2 className="w-5 h-5" />
+                                                    <Trash2 className="w-4 h-4 sm:w-5 sm:h-5" />
                                                 </button>
                                             </div>
                                         </td>

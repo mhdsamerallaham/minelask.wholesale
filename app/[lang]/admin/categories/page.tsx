@@ -78,18 +78,18 @@ export default function AdminCategoriesPage({ params }: { params: Promise<{ lang
     };
 
     return (
-        <div className="space-y-12">
+        <div className="space-y-8 sm:space-y-12">
             <div className="flex justify-between items-end">
                 <div>
-                    <h1 className="text-4xl font-bold font-heading text-slate-900 leading-tight">Categories</h1>
-                    <p className="text-slate-500 font-medium">Manage product categories and collections.</p>
+                    <h1 className="text-2xl sm:text-4xl font-bold font-heading text-slate-900 leading-tight">Categories</h1>
+                    <p className="text-slate-500 font-medium text-sm sm:text-base">Manage product categories and collections.</p>
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-12">
                 {/* Form */}
                 <div className="lg:col-span-1">
-                    <form onSubmit={handleSubmit} className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm space-y-6 sticky top-8">
+                    <form onSubmit={handleSubmit} className="bg-white p-5 sm:p-8 rounded-2xl sm:rounded-3xl border border-slate-100 shadow-sm space-y-5 sm:space-y-6 sticky top-4 sm:top-8">
                         <h3 className="text-xl font-bold">{editingId ? "Edit Category" : "Add New Category"}</h3>
 
                         <div className="space-y-4">
@@ -166,47 +166,49 @@ export default function AdminCategoriesPage({ params }: { params: Promise<{ lang
 
                 {/* List */}
                 <div className="lg:col-span-2">
-                    <div className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden">
-                        <table className="w-full text-left">
-                            <thead className="bg-slate-50 border-b border-slate-100">
-                                <tr>
-                                    <th className="px-8 py-5 text-xs font-bold uppercase tracking-widest text-slate-400">Name</th>
-                                    <th className="px-8 py-5 text-xs font-bold uppercase tracking-widest text-slate-400">Slug</th>
-                                    <th className="px-8 py-5 text-xs font-bold uppercase tracking-widest text-slate-400 text-right">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody className="divide-y divide-slate-50">
-                                {loading ? (
-                                    <tr><td colSpan={3} className="px-8 py-20 text-center text-slate-400">Loading categories...</td></tr>
-                                ) : categories.length === 0 ? (
-                                    <tr><td colSpan={3} className="px-8 py-20 text-center text-slate-400">No categories found.</td></tr>
-                                ) : categories.map((cat) => (
-                                    <tr key={cat.id} className="hover:bg-slate-50/50 transition-colors group">
-                                        <td className="px-8 py-6">
-                                            <div className="space-y-1">
-                                                <p className="font-bold text-slate-900">{cat.name_en}</p>
-                                                <p className="text-xs text-slate-400 font-heading" dir="rtl">{cat.name_ar}</p>
-                                            </div>
-                                        </td>
-                                        <td className="px-8 py-6 font-mono text-sm text-slate-400">{cat.slug}</td>
-                                        <td className="px-8 py-6 text-right space-x-2">
-                                            <button
-                                                onClick={() => handleEdit(cat)}
-                                                className="p-3 bg-white border border-slate-200 rounded-2xl text-slate-400 hover:text-blue-600 hover:border-blue-200 transition-all shadow-sm"
-                                            >
-                                                <Edit2 className="w-4 h-4" />
-                                            </button>
-                                            <button
-                                                onClick={() => handleDelete(cat.id)}
-                                                className="p-3 bg-white border border-slate-200 rounded-2xl text-slate-400 hover:text-rose-700 hover:border-rose-200 transition-all shadow-sm"
-                                            >
-                                                <Trash2 className="w-4 h-4" />
-                                            </button>
-                                        </td>
+                    <div className="bg-white rounded-2xl sm:rounded-3xl border border-slate-100 shadow-sm overflow-hidden">
+                        <div className="overflow-x-auto">
+                            <table className="w-full text-left">
+                                <thead className="bg-slate-50 border-b border-slate-100">
+                                    <tr>
+                                        <th className="px-8 py-5 text-xs font-bold uppercase tracking-widest text-slate-400">Name</th>
+                                        <th className="px-8 py-5 text-xs font-bold uppercase tracking-widest text-slate-400">Slug</th>
+                                        <th className="px-8 py-5 text-xs font-bold uppercase tracking-widest text-slate-400 text-right">Action</th>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody className="divide-y divide-slate-50">
+                                    {loading ? (
+                                        <tr><td colSpan={3} className="px-8 py-20 text-center text-slate-400">Loading categories...</td></tr>
+                                    ) : categories.length === 0 ? (
+                                        <tr><td colSpan={3} className="px-8 py-20 text-center text-slate-400">No categories found.</td></tr>
+                                    ) : categories.map((cat) => (
+                                        <tr key={cat.id} className="hover:bg-slate-50/50 transition-colors group">
+                                            <td className="px-8 py-6">
+                                                <div className="space-y-1">
+                                                    <p className="font-bold text-slate-900">{cat.name_en}</p>
+                                                    <p className="text-xs text-slate-400 font-heading" dir="rtl">{cat.name_ar}</p>
+                                                </div>
+                                            </td>
+                                            <td className="px-8 py-6 font-mono text-sm text-slate-400">{cat.slug}</td>
+                                            <td className="px-8 py-6 text-right space-x-2">
+                                                <button
+                                                    onClick={() => handleEdit(cat)}
+                                                    className="p-3 bg-white border border-slate-200 rounded-2xl text-slate-400 hover:text-blue-600 hover:border-blue-200 transition-all shadow-sm"
+                                                >
+                                                    <Edit2 className="w-4 h-4" />
+                                                </button>
+                                                <button
+                                                    onClick={() => handleDelete(cat.id)}
+                                                    className="p-3 bg-white border border-slate-200 rounded-2xl text-slate-400 hover:text-rose-700 hover:border-rose-200 transition-all shadow-sm"
+                                                >
+                                                    <Trash2 className="w-4 h-4" />
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
