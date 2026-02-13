@@ -58,6 +58,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ lang: 
             cart.push({
                 id: cartItemId,
                 product_id: product.id,
+                sku: product.sku,
                 name: lang === 'ar' ? product.name_ar : product.name_en,
                 color: colorName,
                 color_hex: selectedColor.color_hex,

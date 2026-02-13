@@ -217,8 +217,8 @@ export default function AdminOrdersPage({ params }: { params: Promise<{ lang: st
                                                     key={s}
                                                     onClick={() => setSelectedOrder({ ...selectedOrder, status: s as any })}
                                                     className={`px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-widest border transition-all ${selectedOrder.status === s
-                                                            ? 'bg-slate-900 text-white border-slate-900 shadow-lg'
-                                                            : 'bg-white text-slate-500 border-slate-200 hover:border-slate-300'
+                                                        ? 'bg-slate-900 text-white border-slate-900 shadow-lg'
+                                                        : 'bg-white text-slate-500 border-slate-200 hover:border-slate-300'
                                                         }`}
                                                 >
                                                     {s}
@@ -240,6 +240,7 @@ export default function AdminOrdersPage({ params }: { params: Promise<{ lang: st
                                         <thead className="bg-slate-50 border-b border-slate-200">
                                             <tr>
                                                 <th className="px-6 py-4 font-bold text-slate-500">Item</th>
+                                                <th className="px-6 py-4 font-bold text-slate-500">SKU</th>
                                                 <th className="px-6 py-4 font-bold text-slate-500">Color/Size</th>
                                                 <th className="px-6 py-4 font-bold text-slate-500">Price ($)</th>
                                                 <th className="px-6 py-4 font-bold text-slate-500">Qty</th>
@@ -251,6 +252,7 @@ export default function AdminOrdersPage({ params }: { params: Promise<{ lang: st
                                             {selectedOrder.items?.map((item: any, idx: number) => (
                                                 <tr key={idx} className="bg-white">
                                                     <td className="px-6 py-4 font-medium text-slate-900">{item.name || item.name_en}</td>
+                                                    <td className="px-6 py-4 font-mono text-sm text-slate-500">{item.sku || '-'}</td>
                                                     <td className="px-6 py-4 text-slate-500">
                                                         {item.color}
                                                         {item.size && <span className="ml-2 bg-slate-100 px-1.5 py-0.5 rounded textxs font-bold">{item.size}</span>}
@@ -286,13 +288,13 @@ export default function AdminOrdersPage({ params }: { params: Promise<{ lang: st
                                             ))}
                                             {(!selectedOrder.items || selectedOrder.items.length === 0) && (
                                                 <tr>
-                                                    <td colSpan={6} className="px-6 py-8 text-center text-slate-400 italic">No items in this order.</td>
+                                                    <td colSpan={7} className="px-6 py-8 text-center text-slate-400 italic">No items in this order.</td>
                                                 </tr>
                                             )}
                                         </tbody>
                                         <tfoot className="bg-slate-50 border-t border-slate-200">
                                             <tr>
-                                                <td colSpan={4} className="px-6 py-4 text-right font-bold text-slate-500">Total Amount:</td>
+                                                <td colSpan={5} className="px-6 py-4 text-right font-bold text-slate-500">Total Amount:</td>
                                                 <td className="px-6 py-4 text-right font-bold text-xl text-rose-900">
                                                     ${selectedOrder.items?.reduce((sum: number, i: any) => sum + ((i.price || 0) * (i.quantity || 0)), 0).toFixed(2)}
                                                 </td>

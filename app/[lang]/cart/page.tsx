@@ -67,6 +67,7 @@ export default function CartPage({ params }: { params: Promise<{ lang: string }>
                 body: JSON.stringify({
                     items: cartItems.map(item => ({
                         id: item.product_id,
+                        sku: item.sku,
                         name: item.name,
                         color: item.color,
                         size: item.size,

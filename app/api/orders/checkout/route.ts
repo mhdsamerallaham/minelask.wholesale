@@ -128,7 +128,7 @@ export async function POST(request: NextRequest) {
 }
 
 function formatWhatsAppMessage(orderNumber: string, customer: any, items: any[]) {
-    const itemsList = items.map(item => `- ${item.name} (${item.color}${item.size ? ` / ${item.size}` : ''}) x ${item.quantity} = $${(item.price * item.quantity).toFixed(2)}`).join("\n");
+    const itemsList = items.map(item => `- ${item.sku ? `[${item.sku}] ` : ''}${item.name} (${item.color}${item.size ? ` / ${item.size}` : ''}) x ${item.quantity} = $${(item.price * item.quantity).toFixed(2)}`).join("\n");
     const total = items.reduce((acc, item) => acc + (item.price * item.quantity), 0).toFixed(2);
 
     return `*MINEL AŞK - NEW WHOLESALE ORDER*\n\n` +
