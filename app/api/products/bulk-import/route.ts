@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import * as XLSX from "xlsx";
-import { supabaseAdmin } from "@/lib/supabase/client";
+import { supabaseAdmin, supabase as supabaseAnon } from "@/lib/supabase/client";
 
 export const dynamic = 'force-dynamic';
 
@@ -37,9 +37,10 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ success: false, error: "Excel file is empty" }, { status: 400 });
         }
 
-        const supabase = supabaseAdmin();
-        if (!supabase) {
-            return NextResponse.json({ success: false, error: "Database not configured" }, { status: 500 });
+        // Try admin client first, fall back to anon client
+        const supabase = supabaseAdmin() || supabaseAnon;
+        if (!supabase || typeof supabase.from !== 'function') {
+            return NextResponse.json({ success: false, error: "Database not configured. Check your NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY in .env.local" }, { status: 500 });
         }
 
         // Parse all rows
