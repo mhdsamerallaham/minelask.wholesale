@@ -197,7 +197,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ lang: 
                             <div className="space-y-2">
                                 <p className="text-xs font-bold uppercase tracking-widest text-slate-400">{t("product.min_order_req")}</p>
                                 <p className="text-slate-500 text-sm">
-                                    {t("product.min_order_help").replace("{count}", product.min_order_qty.toString())}
+                                    {t("product.min_order_help_global")}
                                 </p>
                             </div>
 

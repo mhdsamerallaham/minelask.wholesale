@@ -36,29 +36,14 @@ export async function POST(request: NextRequest) {
             });
         }
 
-        // 1. Validate MOQ server-side (Stock check disabled as per user request for production items)
+        // 1. Validate MOQ server-side (Global MOQ: 15)
+        const totalQuantity = items.reduce((acc: number, item: any) => acc + (item.quantity || 0), 0);
 
-        const productIds = items.map((i: any) => i.id);
-        const { data: dbProducts, error: fetchError } = await supabase
-            .from("products")
-            .select("id, min_order_qty, name_en")
-            .in("id", productIds);
-
-        if (fetchError) {
-            console.error("Error fetching products:", fetchError);
-            // Fallback to allowing the order if DB fetch fails
-        } else {
-            for (const item of items) {
-                const dbProduct = dbProducts?.find(p => p.id === item.id);
-                // If product not found in DB but exists in cart, we skip validation for it
-                if (dbProduct && item.quantity < (dbProduct.min_order_qty || 1)) {
-                    // Strict validation only if DB connection works and product exists
-                    return NextResponse.json({
-                        success: false,
-                        error: `Item "${dbProduct.name_en}" does not meet minimum order quantity of ${dbProduct.min_order_qty}.`
-                    }, { status: 400 });
-                }
-            }
+        if (totalQuantity < 15) {
+            return NextResponse.json({
+                success: false,
+                error: `Minimum total order quantity is 15 items. You have ${totalQuantity}.`
+            }, { status: 400 });
         }
 
         // Create order in DB

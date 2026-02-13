@@ -72,6 +72,8 @@
         "back_to_shop": "Back to Shop",
         "confirm_and_whatsapp": "Confirm & Send to WhatsApp",
         "added_to_cart": "Added to Cart",
+        "min_order_error_title": "Minimum Order Limit",
+        "min_order_error_desc": "Minimum total order quantity is 15 items.",
         "order_success_title": "Order Received!",
         "order_success_desc": "Your order #{number} has been submitted. We will contact you shortly via WhatsApp.",
         "continue_shopping": "Continue Shopping"
@@ -88,6 +90,7 @@
         "available_colors": "Available Colors",
         "wholesale_price_label": "Wholesale Price",
         "min_order_req": "Min. Order Requirement",
+        "min_order_help_global": "Min. order: 15 items total (mix & match allowed).",
         "min_order_help": "Minimum {count} units required for this item.",
         "min_required": "Min. {count} required",
         "no_image": "No Image",
@@ -105,7 +108,6 @@
         "hero_subtitle": "Beyond Wholesale",
         "hero_desc": "At Minel Aşk, we don't just sell garments — we provide a complete fashion ecosystem. From exclusive evening wear to digital content creation, we empower your business to thrive in the competitive fashion industry.",
         "scroll_explore": "Scroll to Explore",
-        
         "service1_title": "Wholesale Evening & Modest Wear",
         "service1_subtitle": "Premium Quality, Competitive Prices",
         "service1_desc": "Discover our extensive collection of luxury evening dresses and modest swimwear. Each piece is crafted with meticulous attention to detail, using premium fabrics that exude elegance and sophistication. Our wholesale program offers retailers access to exclusive designs at competitive prices, with flexible minimum order quantities and worldwide shipping.",
@@ -117,7 +119,6 @@
         "service1_feature3_desc": "Minimum orders starting from 12 pieces per style",
         "service1_feature4": "Global Shipping",
         "service1_feature4_desc": "Delivered to over 50 countries with express options",
-        
         "service2_title": "Digital Content Studio",
         "service2_subtitle": "Your Visual Identity, Perfected",
         "service2_desc": "In today's digital marketplace, stunning visuals are essential. Our in-house creative studio produces professional photography and video content that makes your products irresistible. From high-resolution product shots to engaging social media reels, we provide all the digital assets you need to sell successfully online.",
@@ -129,7 +130,6 @@
         "service2_feature3_desc": "Trending short-form content for Instagram and TikTok",
         "service2_feature4": "E-commerce Ready",
         "service2_feature4_desc": "Optimized images for all major marketplace platforms",
-        
         "service3_title": "Bespoke Manufacturing",
         "service3_subtitle": "Your Vision, Our Craft",
         "service3_desc": "Have a unique design concept? Our skilled artisans bring your vision to reality. We specialize in custom garment production with premium materials and expert craftsmanship. From initial sketch to final product, we work closely with you to create pieces that perfectly match your brand's aesthetic and quality standards.",
@@ -141,7 +141,6 @@
         "service3_feature3_desc": "Prototype development before bulk manufacturing",
         "service3_feature4": "Quality Assurance",
         "service3_feature4_desc": "Rigorous quality control at every production stage",
-        
         "service4_title": "Global Communication Hub",
         "service4_subtitle": "Speak Your Language",
         "service4_desc": "We believe language should never be a barrier to great business relationships. Our multilingual team ensures seamless communication in Turkish, Arabic, and English. Whether you're in Istanbul, Dubai, or London, you'll receive personalized support from dedicated account managers who understand your market.",
@@ -153,7 +152,6 @@
         "service4_feature3_desc": "International business communication standards",
         "service4_feature2": "24/7 Availability",
         "service4_feature2_desc": "WhatsApp support across all time zones",
-        
         "why_choose_title": "Why Retailers Choose Minel Aşk",
         "why_choose_subtitle": "Excellence in Every Detail",
         "benefit1_title": "Quality Without Compromise",
@@ -162,7 +160,6 @@
         "benefit2_desc": "Quick production and shipping times to keep your inventory fresh",
         "benefit3_title": "Market Expertise",
         "benefit3_desc": "Years of experience in Middle Eastern and European fashion markets",
-        
         "process_title": "How We Work",
         "process_step1": "Consultation",
         "process_step1_desc": "Discuss your needs, budget, and timeline with our team",
@@ -172,7 +169,6 @@
         "process_step3_desc": "We prepare your order with meticulous attention to quality",
         "process_step4": "Delivery",
         "process_step4_desc": "Receive your products with all digital content ready for immediate sales",
-        
         "cta_title": "Ready to Elevate Your Business?",
         "cta_desc": "Join hundreds of successful retailers who trust Minel Aşk as their fashion partner. Let's discuss how we can support your growth.",
         "cta_button_primary": "Start Your Journey",
@@ -182,20 +178,16 @@
         "hero_title": "Let's Create Together",
         "hero_subtitle": "Your Vision, Our Craft",
         "hero_desc": "Every great partnership begins with a conversation. Reach out and let's transform your fashion business into something extraordinary.",
-        
         "whatsapp_title": "Instant Connection",
         "whatsapp_desc": "Prefer quick answers? Message us directly on WhatsApp for immediate assistance from our dedicated team.",
         "whatsapp_button": "Chat on WhatsApp",
         "whatsapp_hours": "Available 24/7 across all time zones",
-        
         "location_title": "Visit Our Showroom",
         "location_desc": "Experience our collections in person. Our Istanbul showroom welcomes partners from around the world.",
         "location_button": "Get Directions",
         "location_address": "Istanbul, Turkey",
-        
         "social_title": "Follow Our Journey",
         "social_desc": "Stay inspired with our latest collections, behind-the-scenes content, and success stories from our global partners.",
-        
         "cta_headline": "Ready to Start?",
         "cta_text": "Your success story begins with a single message. Let's build something beautiful together.",
         "cta_whatsapp": "Message Now",

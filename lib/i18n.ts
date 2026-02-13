@@ -1,7 +1,8 @@
 import en from '../public/locales/en.json';
 import ar from '../public/locales/ar.json';
+import tr from '../public/locales/tr.json';
 
-const translations: Record<string, any> = { en, ar };
+const translations: Record<string, any> = { en, ar, tr };
 
 export function getTranslation(lang: string, key: string): string {
     const keys = key.split('.');
@@ -14,6 +15,6 @@ export function getTranslation(lang: string, key: string): string {
     return value || key;
 }
 
-export type Locale = 'en' | 'ar';
-export const locales: Locale[] = ['en', 'ar'];
+export type Locale = 'en' | 'ar' | 'tr';
+export const locales: Locale[] = ['en', 'ar', 'tr'];
 export const defaultLocale: Locale = 'en';

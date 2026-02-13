@@ -51,9 +51,9 @@ export default function CartPage({ params }: { params: Promise<{ lang: string }>
 
     const subtotal = cartItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
 
-    // Validation: Check if all items meet their min_order_qty
-    const invalidItems = cartItems.filter(item => item.quantity < (item.min_order_qty || 1));
-    const isCartValid = invalidItems.length === 0;
+    const MIN_ORDER_QTY = 15;
+    const totalQuantity = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+    const isCartValid = totalQuantity >= MIN_ORDER_QTY;
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -144,9 +144,8 @@ export default function CartPage({ params }: { params: Promise<{ lang: string }>
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
                         <div className="lg:col-span-2 space-y-6">
                             {cartItems.map((item) => {
-                                const isInvalid = item.quantity < (item.min_order_qty || 1);
                                 return (
-                                    <div key={item.id} className={`bg-white p-6 rounded-3xl border shadow-sm flex gap-6 items-center transition-all ${isInvalid ? 'border-rose-200 ring-2 ring-rose-500/5' : 'border-slate-100'}`}>
+                                    <div key={item.id} className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm flex gap-6 items-center transition-all">
                                         <div className="w-24 h-32 relative bg-slate-100 rounded-2xl overflow-hidden shrink-0">
                                             {item.image && <Image src={item.image} alt={item.name} fill className="object-cover" />}
                                         </div>
@@ -172,12 +171,7 @@ export default function CartPage({ params }: { params: Promise<{ lang: string }>
                                                     <Trash2 className="w-5 h-5" />
                                                 </button>
 
-                                                {isInvalid && (
-                                                    <p className="text-[10px] font-bold text-rose-600 uppercase tracking-tight flex items-center gap-1">
-                                                        <AlertTriangle className="w-3 h-3" />
-                                                        {t("product.min_required").replace("{count}", (item.min_order_qty || 1).toString())}
-                                                    </p>
-                                                )}
+                                                {/* */}
                                             </div>
                                         </div>
                                         <div className="text-right">
@@ -232,17 +226,42 @@ export default function CartPage({ params }: { params: Promise<{ lang: string }>
                                         </div>
                                     </div>
 
-                                    {!isCartValid && (
-                                        <div className="bg-rose-50 border border-rose-100 p-4 rounded-2xl space-y-2">
-                                            <div className="flex items-center gap-2 text-rose-700">
-                                                <AlertTriangle className="w-5 h-5 shrink-0" />
-                                                <p className="font-bold text-sm">{t("warnings.moq_title")}</p>
+                                    {!isCartValid ? (
+                                        <div className="bg-rose-50 border border-rose-100 p-5 rounded-3xl space-y-4">
+                                            <div className="flex items-center justify-between">
+                                                <div className="flex items-center gap-2 text-rose-700">
+                                                    <AlertTriangle className="w-5 h-5 shrink-0" />
+                                                    <p className="font-bold text-sm">{t("cart.min_order_error_title")}</p>
+                                                </div>
+                                                <span className="text-xs font-bold text-rose-700 bg-rose-100 px-2 py-0.5 rounded-full">
+                                                    {totalQuantity} / {MIN_ORDER_QTY}
+                                                </span>
                                             </div>
+
+                                            <div className="h-2 w-full bg-rose-100 rounded-full overflow-hidden">
+                                                <div
+                                                    className="h-full bg-rose-600 transition-all duration-500 ease-out"
+                                                    style={{ width: `${Math.min(100, (totalQuantity / MIN_ORDER_QTY) * 100)}%` }}
+                                                />
+                                            </div>
+
                                             <p className="text-xs text-rose-600 leading-relaxed font-medium">
-                                                {t("warnings.moq_desc")}
+                                                {t("cart.min_order_error_desc")}
+                                            </p>
+
+                                            <p className="text-[10px] uppercase tracking-wider font-bold text-rose-400">
+                                                {lang === 'tr' ? `Siparişi tamamlamak için ${MIN_ORDER_QTY - totalQuantity} ürün daha ekleyin.` :
+                                                    lang === 'ar' ? `أضف ${MIN_ORDER_QTY - totalQuantity} من العناصر الأخرى لإكمال الطلب.` :
+                                                        `Add ${MIN_ORDER_QTY - totalQuantity} more items to complete order.`}
                                             </p>
                                         </div>
+                                    ) : (
+                                        <div className="bg-emerald-50 border border-emerald-100 p-4 rounded-2xl flex items-center gap-3 text-emerald-700">
+                                            <CheckCircle2 className="w-5 h-5 shrink-0" />
+                                            <p className="text-xs font-bold">{lang === 'tr' ? "Minimum sipariş miktarına ulaşıldı!" : "Minimum order limit reached!"}</p>
+                                        </div>
                                     )}
+
 
                                     <button
                                         type="submit"
