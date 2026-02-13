@@ -104,17 +104,42 @@ export default function BulkUploadPage({ params }: { params: Promise<{ lang: str
     };
 
     const handleDownloadTemplate = () => {
-        // Generate a CSV template with headers
+        // Generate a CSV template with headers — include UTF-8 BOM for Arabic support
         const headers = EXCEL_COLUMNS.map(c => c.name).join(",");
         const exampleRow = EXCEL_COLUMNS.map(c => `"${c.example}"`).join(",");
         const csv = `${headers}\n${exampleRow}`;
-        const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+        const BOM = '\uFEFF'; // UTF-8 BOM for Excel Arabic compatibility
+        const blob = new Blob([BOM + csv], { type: "text/csv;charset=utf-8;" });
         const url = URL.createObjectURL(blob);
         const link = document.createElement("a");
         link.href = url;
         link.download = "minel_products_template.csv";
         link.click();
         URL.revokeObjectURL(url);
+    };
+
+    const handlePreview = async () => {
+        if (!file) return;
+        setLoading(true);
+        setStatus({});
+        const formData = new FormData();
+        formData.append("file", file);
+        try {
+            const response = await fetch("/api/products/bulk-import?preview=true", {
+                method: "POST",
+                body: formData,
+            });
+            const result = await response.json();
+            setStatus({
+                success: true,
+                message: `📋 Preview: ${result.total_rows} rows found. File: ${result.file_name} (${result.is_csv ? 'CSV' : 'XLSX'})`,
+                details: result.first_row ? [{ sku: 'First Row Data', error: JSON.stringify(result.first_row, null, 2) }] : undefined
+            });
+        } catch (error) {
+            setStatus({ error: "Preview failed." });
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -185,17 +210,31 @@ export default function BulkUploadPage({ params }: { params: Promise<{ lang: str
                             </div>
                         )}
 
-                        <button
-                            type="submit"
-                            disabled={!file || loading}
-                            className={`w-full py-4 rounded-2xl font-bold flex items-center justify-center gap-3 transition-all ${!file || loading
-                                ? 'bg-slate-100 text-slate-400 cursor-not-allowed'
-                                : 'bg-rose-700 text-white hover:bg-rose-800 shadow-lg shadow-rose-900/20'
-                                }`}
-                        >
-                            {loading ? <Loader2 className="w-6 h-6 animate-spin" /> : <Upload className="w-6 h-6" />}
-                            {loading ? "Importing..." : "Start Import"}
-                        </button>
+                        <div className="flex gap-3">
+                            <button
+                                type="button"
+                                onClick={handlePreview}
+                                disabled={!file || loading}
+                                className={`flex-1 py-4 rounded-2xl font-bold flex items-center justify-center gap-3 transition-all ${!file || loading
+                                    ? 'bg-slate-100 text-slate-400 cursor-not-allowed'
+                                    : 'bg-slate-700 text-white hover:bg-slate-800 shadow-lg shadow-slate-900/20'
+                                    }`}
+                            >
+                                {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Info className="w-5 h-5" />}
+                                Preview
+                            </button>
+                            <button
+                                type="submit"
+                                disabled={!file || loading}
+                                className={`flex-[2] py-4 rounded-2xl font-bold flex items-center justify-center gap-3 transition-all ${!file || loading
+                                    ? 'bg-slate-100 text-slate-400 cursor-not-allowed'
+                                    : 'bg-rose-700 text-white hover:bg-rose-800 shadow-lg shadow-rose-900/20'
+                                    }`}
+                            >
+                                {loading ? <Loader2 className="w-6 h-6 animate-spin" /> : <Upload className="w-6 h-6" />}
+                                {loading ? "Importing..." : "Start Import"}
+                            </button>
+                        </div>
                     </form>
 
                     {/* Column Reference Table */}
