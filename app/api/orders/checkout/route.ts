@@ -13,8 +13,12 @@ export async function POST(request: NextRequest) {
         // Helper to format message
         const message = formatWhatsAppMessage(orderNumber, customer, items);
 
-        // Try to get Supabase client (Service Key preferred, fallback to Anon)
+        // Get Admin WhatsApp Number from Settings or Env
         let supabase = supabaseAdmin();
+        const { data: settings } = supabase ? await (supabase as any).from("admin_settings").select("setting_value").eq("setting_key", "whatsapp_number").single() : { data: null };
+
+        const rawAdminPhone = settings?.setting_value || process.env.TWILIO_WHATSAPP_FROM || "";
+        const adminPhone = rawAdminPhone.replace("whatsapp:", "").replace(/[^0-9+]/g, "");
 
         if (!supabase) {
             console.warn("Service Key missing, attempting fallback to Anon Key.");
@@ -25,6 +29,7 @@ export async function POST(request: NextRequest) {
         }
 
         // If Supabase is still not configured or invalid, bypass DB
+        // If Supabase is still not configured or invalid, bypass DB
         if (!supabase || typeof (supabase as any).from !== 'function') {
             console.warn("Supabase not configured, skipping DB order creation.");
             return NextResponse.json({
@@ -32,7 +37,8 @@ export async function POST(request: NextRequest) {
                 order_id: "local-bypass",
                 order_number: orderNumber,
                 whatsapp_sent: false,
-                message: message
+                message: message,
+                admin_phone: adminPhone
             });
         }
 
@@ -47,7 +53,7 @@ export async function POST(request: NextRequest) {
         }
 
         // Create order in DB
-        const { data: order, error: orderError } = await supabase.from("orders").insert({
+        const { data: order, error: orderError } = await (supabase as any).from("orders").insert({
             order_number: orderNumber,
             customer_name: customer.name,
             customer_email: customer.email,
@@ -61,21 +67,15 @@ export async function POST(request: NextRequest) {
 
         if (orderError) {
             console.error("Error creating order:", orderError);
-            // If DB insert fails, we can still return success for WhatsApp flow
-            // but strictly speaking we might want to warn.
-            // For now, let's treat it as a bypass success.
             return NextResponse.json({
                 success: true,
                 order_id: "db-failed-bypass",
                 order_number: orderNumber,
                 whatsapp_sent: false,
-                message: message
+                message: message,
+                admin_phone: adminPhone
             });
         }
-
-        // Get Admin WhatsApp Number from Settings
-        const { data: settings } = await supabase.from("admin_settings").select("setting_value").eq("setting_key", "whatsapp_number").single();
-        const adminPhone = settings?.setting_value || process.env.TWILIO_WHATSAPP_FROM;
 
         // Send WhatsApp via Twilio (Optional, but planned)
         let whatsappSent = false;
@@ -84,7 +84,7 @@ export async function POST(request: NextRequest) {
             try {
                 await client.messages.create({
                     from: process.env.TWILIO_WHATSAPP_FROM,
-                    to: `whatsapp:${adminPhone}`,
+                    to: `whatsapp:${adminPhone.startsWith('+') ? adminPhone : '+' + adminPhone}`,
                     body: message
                 });
                 whatsappSent = true;
@@ -95,7 +95,7 @@ export async function POST(request: NextRequest) {
 
         // Update order status if WhatsApp was sent
         if (whatsappSent) {
-            await supabase.from("orders").update({ whatsapp_message_sent: true, whatsapp_sent_at: new Date() }).eq("id", order.id);
+            await (supabase as any).from("orders").update({ whatsapp_message_sent: true, whatsapp_sent_at: new Date() }).eq("id", order.id);
         }
 
         return NextResponse.json({
@@ -103,7 +103,8 @@ export async function POST(request: NextRequest) {
             order_id: order.id,
             order_number: orderNumber,
             whatsapp_sent: whatsappSent,
-            message: message
+            message: message,
+            admin_phone: adminPhone
         });
 
     } catch (err: any) {
