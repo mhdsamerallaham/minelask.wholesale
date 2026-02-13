@@ -29,23 +29,14 @@ export async function POST(request: NextRequest) {
 
         const buffer = await file.arrayBuffer();
         const uint8 = new Uint8Array(buffer);
-        const fileName = file.name.toLowerCase();
-        const isCSV = fileName.endsWith('.csv');
 
-        let workbook;
-        if (isCSV) {
-            // For CSV: try UTF-8 with BOM, then fallback
-            const decoder = new TextDecoder('utf-8');
-            const csvText = decoder.decode(uint8);
-            workbook = XLSX.read(csvText, { type: "string" });
-        } else {
-            // For XLSX/XLS: use buffer type
-            workbook = XLSX.read(uint8, { type: "array" });
-        }
+        // Read the workbook directly from the array - SheetJS is excellent at auto-detecting
+        // encodings for XLSX, XLS, and even many CSV formats.
+        const workbook = XLSX.read(uint8, { type: "array" });
 
         const sheetName = workbook.SheetNames[0];
         const sheet = workbook.Sheets[sheetName];
-        const rows: any[] = XLSX.utils.sheet_to_json(sheet);
+        const rows: any[] = XLSX.utils.sheet_to_json(sheet, { defval: "" });
 
         // Debug: if ?preview=true, return first row without saving
         const url = new URL(request.url);
@@ -56,11 +47,10 @@ export async function POST(request: NextRequest) {
                 file_name: file.name,
                 file_type: file.type,
                 file_size: file.size,
-                is_csv: isCSV,
                 total_rows: rows.length,
                 columns: rows.length > 0 ? Object.keys(rows[0]) : [],
                 first_row: rows.length > 0 ? rows[0] : null,
-                second_row: rows.length > 1 ? rows[1] : null,
+                all_rows_sample: rows.slice(0, 3)
             });
         }
 
