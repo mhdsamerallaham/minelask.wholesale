@@ -30,9 +30,11 @@ export async function POST(request: NextRequest) {
         const buffer = await file.arrayBuffer();
         const uint8 = new Uint8Array(buffer);
 
-        // Read the workbook directly from the array - SheetJS is excellent at auto-detecting
-        // encodings for XLSX, XLS, and even many CSV formats.
-        const workbook = XLSX.read(uint8, { type: "array" });
+        // Read the workbook with explicit codepage 65001 (UTF-8)
+        const workbook = XLSX.read(uint8, {
+            type: "array",
+            codepage: 65001
+        });
 
         const sheetName = workbook.SheetNames[0];
         const sheet = workbook.Sheets[sheetName];
@@ -45,12 +47,9 @@ export async function POST(request: NextRequest) {
                 success: true,
                 preview: true,
                 file_name: file.name,
-                file_type: file.type,
-                file_size: file.size,
                 total_rows: rows.length,
                 columns: rows.length > 0 ? Object.keys(rows[0]) : [],
                 first_row: rows.length > 0 ? rows[0] : null,
-                all_rows_sample: rows.slice(0, 3)
             });
         }
 
@@ -64,19 +63,38 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ success: false, error: "Database not configured. Check your NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY in .env.local" }, { status: 500 });
         }
 
+        // Helper to find a column by name or partial/corrupted match
+        const getVal = (row: any, ...keys: string[]) => {
+            // Try exact matches first
+            for (const key of keys) {
+                if (row[key] !== undefined && row[key] !== "") return row[key];
+            }
+
+            // Try case-insensitive and whitespace-insensitive
+            const rowKeys = Object.keys(row);
+            for (const target of keys) {
+                const normTarget = target.toLowerCase().replace(/[^a-z0-9]/g, '');
+                for (const actualKey of rowKeys) {
+                    const normActual = actualKey.toLowerCase().replace(/[^a-z0-9]/g, '');
+                    if (normActual === normTarget) return row[actualKey];
+                }
+            }
+            return "";
+        };
+
         // Parse all rows
         const parsedRows: ParsedRow[] = rows.map((row: any) => ({
-            name_en: (row["Product Name (EN)"] || "").toString().trim(),
-            name_ar: (row["Product Name (AR)"] || "").toString().trim(),
-            description_en: (row["Description (EN)"] || "").toString().trim(),
-            description_ar: (row["Description (AR)"] || "").toString().trim(),
-            category_slug: (row["Category"] || "general").toString().trim(),
-            sku: (row["SKU"] || "").toString().trim(),
-            wholesale_price: parseFloat(row["Wholesale Price"]) || 0,
-            color_en: (row["Color (EN)"] || "").toString().trim(),
-            color_ar: (row["Color (AR)"] || "").toString().trim(),
-            color_hex: (row["Hex Code"] || "#000000").toString().trim(),
-            sizes: (row["Sizes"] || "S, M, L, XL").toString().split(",").map((s: string) => s.trim()).filter(Boolean),
+            name_en: getVal(row, "Product Name (EN)", "Name (EN)", "Name EN").toString().trim(),
+            name_ar: getVal(row, "Product Name (AR)", "Name (AR)", "Name AR").toString().trim(),
+            description_en: getVal(row, "Description (EN)", "Desc EN").toString().trim(),
+            description_ar: getVal(row, "Description (AR)", "Desc AR").toString().trim(),
+            category_slug: getVal(row, "Category", "Slug").toString().trim() || "general",
+            sku: getVal(row, "SKU", "Code").toString().trim(),
+            wholesale_price: parseFloat(getVal(row, "Wholesale Price", "Price")) || 0,
+            color_en: getVal(row, "Color (EN)", "Color").toString().trim(),
+            color_ar: getVal(row, "Color (AR)").toString().trim(),
+            color_hex: getVal(row, "Hex Code", "Hex").toString().trim() || "#000000",
+            sizes: getVal(row, "Sizes").toString().split(",").map((s: string) => s.trim()).filter(Boolean),
         }));
 
         // Group rows by SKU — multiple rows with same SKU = multiple variants

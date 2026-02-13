@@ -104,18 +104,8 @@ export default function BulkUploadPage({ params }: { params: Promise<{ lang: str
     };
 
     const handleDownloadTemplate = () => {
-        // Generate a CSV template with headers — include UTF-8 BOM for Arabic support
-        const headers = EXCEL_COLUMNS.map(c => c.name).join(",");
-        const exampleRow = EXCEL_COLUMNS.map(c => `"${c.example}"`).join(",");
-        const csv = `${headers}\n${exampleRow}`;
-        const BOM = '\uFEFF'; // UTF-8 BOM for Excel Arabic compatibility
-        const blob = new Blob([BOM + csv], { type: "text/csv;charset=utf-8;" });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement("a");
-        link.href = url;
-        link.download = "minel_products_template.csv";
-        link.click();
-        URL.revokeObjectURL(url);
+        // Download the proper XLSX template from the server
+        window.location.href = "/api/products/bulk-template";
     };
 
     const handlePreview = async () => {
@@ -130,10 +120,18 @@ export default function BulkUploadPage({ params }: { params: Promise<{ lang: str
                 body: formData,
             });
             const result = await response.json();
+
+            // Format the preview data for display
+            const previewMsg = `📋 Preview: ${result.total_rows} rows found. File: ${result.file_name}`;
+            const details = [
+                { sku: 'Columns Found', error: JSON.stringify(result.columns) },
+                { sku: 'First Row Data', error: JSON.stringify(result.first_row, null, 2) }
+            ];
+
             setStatus({
                 success: true,
-                message: `📋 Preview: ${result.total_rows} rows found. File: ${result.file_name} (${result.is_csv ? 'CSV' : 'XLSX'})`,
-                details: result.first_row ? [{ sku: 'First Row Data', error: JSON.stringify(result.first_row, null, 2) }] : undefined
+                message: previewMsg,
+                details: details
             });
         } catch (error) {
             setStatus({ error: "Preview failed." });
